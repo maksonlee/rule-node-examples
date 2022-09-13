@@ -65,6 +65,7 @@ public class TbFirebaseCloudMessageNode implements TbNode {
         FirebaseOptions options = null;
         try {
             options = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(key)).build();
+            key.close();
         } catch (IOException e) {
             throw new TbNodeException(e);
         }
