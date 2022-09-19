@@ -1,12 +1,12 @@
 /**
  * Copyright © 2018 The Thingsboard Authors
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,9 +22,18 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.messaging.*;
+import com.google.firebase.messaging.AndroidConfig;
+import com.google.firebase.messaging.AndroidNotification;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import lombok.extern.slf4j.Slf4j;
-import org.thingsboard.rule.engine.api.*;
+import org.thingsboard.rule.engine.api.RuleNode;
+import org.thingsboard.rule.engine.api.TbContext;
+import org.thingsboard.rule.engine.api.TbNode;
+import org.thingsboard.rule.engine.api.TbNodeConfiguration;
+import org.thingsboard.rule.engine.api.TbNodeException;
 import org.thingsboard.server.common.data.DataConstants;
 import org.thingsboard.server.common.data.kv.AttributeKvEntry;
 import org.thingsboard.server.common.data.plugin.ComponentType;
@@ -61,11 +70,11 @@ public class TbFirebaseCloudMessageNode implements TbNode {
     @Override
     public void init(TbContext ctx, TbNodeConfiguration config) throws TbNodeException {
         attributesService = ctx.getAttributesService();
-        InputStream key = new ByteArrayInputStream(config.getData().toString().getBytes(StandardCharsets.UTF_8));
-        FirebaseOptions options = null;
-        try {
+        FirebaseOptions options;
+        try (
+            InputStream key = new ByteArrayInputStream(config.getData().toString().getBytes(StandardCharsets.UTF_8))
+        ) {
             options = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(key)).build();
-            key.close();
         } catch (IOException e) {
             throw new TbNodeException(e);
         }
@@ -98,7 +107,7 @@ public class TbFirebaseCloudMessageNode implements TbNode {
                         messageBuilder.putData(elt.getKey(), elt.getValue().textValue());
                     }
                 }
-                for(String token : attr.get().getValueAsString().split(",")) {
+                for (String token : attr.get().getValueAsString().split(",")) {
                     messageBuilder.setToken(token.trim());
                     FirebaseMessaging.getInstance().send(messageBuilder.build());
                 }
