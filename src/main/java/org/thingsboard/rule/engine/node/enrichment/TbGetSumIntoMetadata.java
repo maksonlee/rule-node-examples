@@ -25,7 +25,8 @@ import org.thingsboard.server.common.msg.TbMsg;
 import java.io.IOException;
 import java.util.Iterator;
 
-import static org.thingsboard.rule.engine.api.TbRelationTypes.SUCCESS;
+import static org.thingsboard.server.common.data.msg.TbNodeConnectionType.SUCCESS;
+
 
 /**
  * Created by mshvayka on 10.08.18.

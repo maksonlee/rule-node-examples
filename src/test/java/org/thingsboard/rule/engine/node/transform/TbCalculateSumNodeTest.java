@@ -25,6 +25,7 @@ import org.thingsboard.rule.engine.api.TbContext;
 import org.thingsboard.rule.engine.api.TbNodeConfiguration;
 import org.thingsboard.rule.engine.api.TbNodeException;
 import org.thingsboard.server.common.data.id.DeviceId;
+import org.thingsboard.server.common.data.msg.TbMsgType;
 import org.thingsboard.server.common.msg.TbMsg;
 import org.thingsboard.server.common.msg.TbMsgMetaData;
 import org.thingsboard.server.common.msg.queue.TbMsgCallback;
@@ -36,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.Mockito.*;
-import static org.thingsboard.server.common.msg.session.SessionMsgType.POST_ATTRIBUTES_REQUEST;
+import static org.thingsboard.server.common.data.msg.TbMsgType.POST_ATTRIBUTES_REQUEST;
 
 @Slf4j
 class TbCalculateSumNodeTest {
@@ -93,7 +94,7 @@ class TbCalculateSumNodeTest {
         final String data = "{\"temperature1\":22.5,\"temperature2\":10.3}";
         final String expected = "{\"TemperatureSum\":32.8}";
 
-        TbMsg msg = TbMsg.newMsg("POST_ATTRIBUTES_REQUEST", deviceId, metaData, data, callback);
+        TbMsg msg = TbMsg.newMsg(POST_ATTRIBUTES_REQUEST, deviceId, metaData, data, callback);
 
         node.onMsg(ctx, msg);
 
@@ -114,7 +115,7 @@ class TbCalculateSumNodeTest {
     void givenEmptyMsg_whenOnMsg_thenTellFailure() throws Exception {
         final TbMsgMetaData metaData = new TbMsgMetaData();
         final String data = "{}";
-        TbMsg msg = TbMsg.newMsg("POST_ATTRIBUTES_REQUEST", deviceId, metaData, data, callback);
+        TbMsg msg = TbMsg.newMsg(POST_ATTRIBUTES_REQUEST, deviceId, metaData, data, callback);
 
         node.onMsg(ctx, msg);
 
