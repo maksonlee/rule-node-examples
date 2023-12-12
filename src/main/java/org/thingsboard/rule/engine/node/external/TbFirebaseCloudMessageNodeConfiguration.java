@@ -17,24 +17,17 @@ package org.thingsboard.rule.engine.node.external;
 
 import lombok.Data;
 import org.thingsboard.rule.engine.api.NodeConfiguration;
+import org.thingsboard.rule.engine.node.transform.TbCalculateSumNodeConfiguration;
 
 @Data
 public class TbFirebaseCloudMessageNodeConfiguration implements NodeConfiguration<TbFirebaseCloudMessageNodeConfiguration> {
 
-     private String type;
-     private String project_id;
-     private String private_key_id;
-     private String private_key;
-     private String client_email;
-     private String client_id;
-     private String auth_uri;
-     private String token_uri;
-     private String auth_provider_x509_cert_url;
-     private String client_x509_cert_url;
+    private String credential;
 
     @Override
     public TbFirebaseCloudMessageNodeConfiguration defaultConfiguration() {
         TbFirebaseCloudMessageNodeConfiguration configuration = new TbFirebaseCloudMessageNodeConfiguration();
+        configuration.setCredential("{}");
         return configuration;
     }
 }

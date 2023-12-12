@@ -24,7 +24,11 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.thingsboard.rule.engine.api.*;
+import org.thingsboard.rule.engine.api.util.TbNodeUtils;
+import org.thingsboard.rule.engine.node.transform.TbCalculateSumNodeConfiguration;
 import org.thingsboard.server.common.data.DataConstants;
 import org.thingsboard.server.common.data.kv.AttributeKvEntry;
 import org.thingsboard.server.common.data.plugin.ComponentType;
@@ -50,21 +54,29 @@ import static org.thingsboard.server.common.data.msg.TbNodeConnectionType.SUCCES
         configClazz = TbFirebaseCloudMessageNodeConfiguration.class,
         nodeDescription = "Send firebase cloud message",
         nodeDetails = "",
-        uiResources = {"static/rulenode/custom-nodes-config.js"})
+        uiResources = {"static/rulenode/custom-nodes-config.js"},
+        configDirective = "tbExternalNodeFirebaseConfig")
 public class TbFirebaseCloudMessageNode implements TbNode {
+    private static final Logger LOG = LogManager.getLogger(TbFirebaseCloudMessageNode.class);
 
     private static final ObjectMapper mapper = new ObjectMapper();
+
+    TbFirebaseCloudMessageNodeConfiguration config;
+    String credential;
 
     private AttributesService attributesService;
     private FirebaseApp firebaseApp;
     private AndroidConfig androidConfig;
 
     @Override
-    public void init(TbContext ctx, TbNodeConfiguration config) throws TbNodeException {
+    public void init(TbContext ctx, TbNodeConfiguration configuration) throws TbNodeException {
+        this.config = TbNodeUtils.convert(configuration, TbFirebaseCloudMessageNodeConfiguration.class);
+        credential = config.getCredential();
+
         attributesService = ctx.getAttributesService();
         FirebaseOptions options;
         try (
-                InputStream key = new ByteArrayInputStream(config.getData().toString().getBytes(StandardCharsets.UTF_8))
+                InputStream key = new ByteArrayInputStream(credential.getBytes(StandardCharsets.UTF_8))
         ) {
             options = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(key)).build();
         } catch (IOException e) {
