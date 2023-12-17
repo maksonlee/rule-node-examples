@@ -16,8 +16,8 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.custom-nodes.tb</groupId>
@@ -33,11 +33,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.dir>${basedir}</main.dir>
         <thingsboard.version>3.6.1</thingsboard.version>
+        <spring-boot.version>2.7.10</spring-boot.version>
         <lombok.version>1.18.18</lombok.version>
         <guava.version>31.1-jre</guava.version>
         <!--         TEST SCOPE         -->
         <spring-boot-starter-test.version>2.7.10</spring-boot-starter-test.version>
-        <jupiter.version>5.8.2</jupiter.version> <!-- keep the same version as spring-boot-starter-test depend on jupiter-->
+        <jupiter.version>5.8.2
+        </jupiter.version> <!-- keep the same version as spring-boot-starter-test depend on jupiter-->
         <awaitility.version>4.1.0</awaitility.version>
         <commons-io.version>2.11.0</commons-io.version>
         <netty.version>4.1.91.Final</netty.version>
@@ -87,6 +89,12 @@
             <artifactId>guava</artifactId>
             <scope>provided</scope>
             <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <scope>provided</scope>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.firebase</groupId>
@@ -193,52 +201,52 @@
                     </execution>
                 </executions>
             </plugin>
-                <plugin>
-                    <groupId>com.mycila</groupId>
-                    <artifactId>license-maven-plugin</artifactId>
-                    <version>3.0</version>
-                    <configuration>
-                        <header>${main.dir}/license-header-template.txt</header>
-                        <properties>
-                            <owner>The Thingsboard Authors</owner>
-                        </properties>
-                        <excludes>
-                            <exclude>**/.env</exclude>
-                            <exclude>**/.eslintrc</exclude>
-                            <exclude>**/.babelrc</exclude>
-                            <exclude>**/.jshintrc</exclude>
-                            <exclude>**/.gradle/**</exclude>
-                            <exclude>**/nightwatch</exclude>
-                            <exclude>**/README</exclude>
-                            <exclude>**/LICENSE</exclude>
-                            <exclude>**/banner.txt</exclude>
-                            <exclude>node_modules/**</exclude>
-                            <exclude>**/*.properties</exclude>
-                            <exclude>src/test/resources/**</exclude>
-                            <exclude>src/vendor/**</exclude>
-                            <exclude>src/font/**</exclude>
-                            <exclude>src/sh/**</exclude>
-                            <exclude>src/main/scripts/control/**</exclude>
-                            <exclude>src/main/scripts/windows/**</exclude>
-                            <exclude>src/main/resources/public/static/rulenode/**</exclude>
-                        </excludes>
-                        <mapping>
-                            <proto>JAVADOC_STYLE</proto>
-                            <cql>DOUBLEDASHES_STYLE</cql>
-                            <scss>JAVADOC_STYLE</scss>
-                            <jsx>SLASHSTAR_STYLE</jsx>
-                            <conf>SCRIPT_STYLE</conf>
-                            <gradle>JAVADOC_STYLE</gradle>
-                        </mapping>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <header>${main.dir}/license-header-template.txt</header>
+                    <properties>
+                        <owner>The Thingsboard Authors</owner>
+                    </properties>
+                    <excludes>
+                        <exclude>**/.env</exclude>
+                        <exclude>**/.eslintrc</exclude>
+                        <exclude>**/.babelrc</exclude>
+                        <exclude>**/.jshintrc</exclude>
+                        <exclude>**/.gradle/**</exclude>
+                        <exclude>**/nightwatch</exclude>
+                        <exclude>**/README</exclude>
+                        <exclude>**/LICENSE</exclude>
+                        <exclude>**/banner.txt</exclude>
+                        <exclude>node_modules/**</exclude>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>src/test/resources/**</exclude>
+                        <exclude>src/vendor/**</exclude>
+                        <exclude>src/font/**</exclude>
+                        <exclude>src/sh/**</exclude>
+                        <exclude>src/main/scripts/control/**</exclude>
+                        <exclude>src/main/scripts/windows/**</exclude>
+                        <exclude>src/main/resources/public/static/rulenode/**</exclude>
+                    </excludes>
+                    <mapping>
+                        <proto>JAVADOC_STYLE</proto>
+                        <cql>DOUBLEDASHES_STYLE</cql>
+                        <scss>JAVADOC_STYLE</scss>
+                        <jsx>SLASHSTAR_STYLE</jsx>
+                        <conf>SCRIPT_STYLE</conf>
+                        <gradle>JAVADOC_STYLE</gradle>
+                    </mapping>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
