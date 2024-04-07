@@ -124,7 +124,7 @@ public class TbFirebaseCloudMessageNode implements TbNode {
                 ctx.tellFailure(msg, new Exception("registrationToken server attribute is required"));
             }
         } catch (FirebaseMessagingException | JsonProcessingException e) {
-            ctx.tellFailure(msg, new Exception());
+            ctx.tellFailure(msg, e);
         }
     }
 
