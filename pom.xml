@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright © 2018 The Thingsboard Authors
+    Copyright © 2018-2023 The Thingsboard Authors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
     limitations under the License.
 
 -->
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.custom-nodes.tb</groupId>
@@ -32,14 +32,13 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.dir>${basedir}</main.dir>
-        <thingsboard.version>3.6.1</thingsboard.version>
+        <thingsboard.version>3.6.3</thingsboard.version>
         <spring-boot.version>2.7.10</spring-boot.version>
         <lombok.version>1.18.18</lombok.version>
         <guava.version>31.1-jre</guava.version>
+        <firebase-admin.version>8.0.1</firebase-admin.version>
         <!--         TEST SCOPE         -->
-        <spring-boot-starter-test.version>2.7.10</spring-boot-starter-test.version>
-        <jupiter.version>5.8.2
-        </jupiter.version> <!-- keep the same version as spring-boot-starter-test depend on jupiter-->
+        <jupiter.version>5.8.2</jupiter.version> <!-- keep the same version as spring-boot-starter-test depend on jupiter-->
         <awaitility.version>4.1.0</awaitility.version>
         <commons-io.version>2.11.0</commons-io.version>
         <netty.version>4.1.91.Final</netty.version>
@@ -98,15 +97,15 @@
         </dependency>
         <dependency>
             <groupId>com.google.firebase</groupId>
-            <artifactId>firebase-admin</artifactId>
-            <version>9.0.0</version>
-            <scope>compile</scope>
+	    <artifactId>firebase-admin</artifactId>
+            <scope>provided</scope>
+	    <version>${firebase-admin.version}</version>
         </dependency>
         <!--         TEST SCOPE         -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>${spring-boot-starter-test.version}</version>
+            <version>${spring-boot.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
